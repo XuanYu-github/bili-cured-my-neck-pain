@@ -2,9 +2,9 @@
     <img width="180" src="config/assets/bcmnp-logo.png" alt="bcmnp-logo">
 </div>
 
-<p align="center" style="font-size:2.5em;font-weight:bold;margin:10px">
+<div align="center" style="font-size:2.5em;font-weight:bold;margin:10px">
   B站治好了我的颈椎病
-</p>
+</div>
 
 <p align="center">
     给B站PC网页版添加视频旋转功能，喜欢的话点点小星星哟😘
