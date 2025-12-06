@@ -160,7 +160,13 @@ class RotateController {
 
         const scaleX = W / (W * Math.abs(Math.cos(rad)) + H * Math.abs(Math.sin(rad)));
         const scaleY = H / (W * Math.abs(Math.sin(rad)) + H * Math.abs(Math.cos(rad)));
-        const scale = Math.min(scaleX, scaleY);
+
+        let scale = Math.min(scaleX, scaleY);
+
+        // 可以修复全屏的时候旋转失效的问题，不知道为什么
+        if (angle === 90 || angle === 270 || angle === 180) {
+            scale += 0.01;
+        }
 
         const oldTransform = video.style.transform || 'rotate(0deg) scale(1)';
         const newTransform = `rotate(${angle}deg) scale(${scale})`;
