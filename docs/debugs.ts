@@ -1,4 +1,4 @@
-const $0 = document.createElement('div');
+declare const $0: HTMLElement;
 
 // 保持视频窗口控件显示
 setInterval(() => { document.querySelector('.bpx-player-container')?.setAttribute('data-ctrl-hidden', 'false') }, 1000);
