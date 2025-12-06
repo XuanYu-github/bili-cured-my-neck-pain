@@ -5,6 +5,7 @@ import {
 class RotateController {
     private toggle: HTMLElement;
     private panel: HTMLElement;
+    private rotateItems: HTMLElement;
 
     // 显示和隐藏面板共用的定时器
     private timer: number | null = null;
@@ -15,19 +16,25 @@ class RotateController {
     constructor() {
         const toggle = document.querySelector<HTMLElement>('.bpx-player-ctrl-rotate .bpx-player-ctrl-btn-icon');
         const panel = document.querySelector<HTMLElement>('.bpx-player-ctrl-rotate .bcmnp-rotate-box');
+        const rotateItems = document.querySelector<HTMLElement>('.bcmnp-rotate-items');
 
-        if (!toggle || !panel) {
+        if (!toggle || !panel || !rotateItems) {
             throw new Error('旋转按钮或面板未找到');
         }
 
+        // 赋值
         this.toggle = toggle;
         this.panel = panel;
+        this.rotateItems = rotateItems;
 
+        // 监听事件
         this.toggle.addEventListener('mouseenter', this.toggleOnMouseEnter.bind(this));
         this.toggle.addEventListener('mouseleave', this.toggleOnMouseLeave.bind(this));
 
         this.panel.addEventListener('mouseenter', this.panelOnMouseEnter.bind(this));
         this.panel.addEventListener('mouseleave', this.panelOnMouseLeave.bind(this));
+
+        this.rotateItems.addEventListener('click', this.rotateItemOnClick.bind(this));
     }
 
     // 共用定时器
@@ -113,6 +120,59 @@ class RotateController {
             this.panel.style.bottom = `41px`;
         }
         this.panel.style.right = `${(toggleRect.width - panelRect.width) / 2}px`;
+    }
+
+    // 鼠标点击屏幕旋转选项的值
+    private rotateItemOnClick(event: Event) {
+        const target = event.target as HTMLElement;
+        if (!target.classList.contains('bcmnp-rotate-item')) {
+            return;
+        }
+
+        const angleStr = target.dataset.angle;
+        if (!angleStr) {
+            log('未找到旋转角度数据');
+            return;
+        }
+        const angle = parseInt(angleStr, 10);
+        this.rotateVideo(angle);
+
+        // 更新选中状态
+        const checked = this.rotateItems.querySelector<HTMLElement>('.bcmnp-rotate-item.checked');
+        if (checked) {
+            checked.classList.remove('checked');
+        }
+        target.classList.add('checked');
+    }
+
+    // 旋转视频
+    private rotateVideo(angle: number) {
+        const video = document.querySelector<HTMLVideoElement>('.bpx-player-video-wrap');
+        if (!video) {
+            log('视频元素未找到，无法旋转');
+            return;
+        }
+
+        // 计算最佳缩放参数
+        const W = 16;
+        const H = 9;
+        const rad = angle * Math.PI / 180;
+
+        const scaleX = W / (W * Math.abs(Math.cos(rad)) + H * Math.abs(Math.sin(rad)));
+        const scaleY = H / (W * Math.abs(Math.sin(rad)) + H * Math.abs(Math.cos(rad)));
+        const scale = Math.min(scaleX, scaleY);
+
+        const oldTransform = video.style.transform || 'rotate(0deg) scale(1)';
+        const newTransform = `rotate(${angle}deg) scale(${scale})`;
+        video.style.transform = newTransform;
+
+        video.animate([
+            { transform: oldTransform },
+            { transform: newTransform }
+        ], {
+            duration: 300,
+            easing: 'ease-in-out',
+        });
     }
 }
 
