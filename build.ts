@@ -24,7 +24,7 @@ async function main() {
 
     // main.css
     esbuild.build({
-        entryPoints: ['src/main.css'],
+        entryPoints: ['src/style/main.css'],
         outfile: 'dist/main.css',
         minify: true,
         loader: { '.css': 'css' }
