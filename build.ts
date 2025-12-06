@@ -2,6 +2,8 @@ import * as esbuild from 'esbuild';
 import * as path from 'path';
 import * as dir from './tools/dir.ts';
 
+import manifest from './config/manifest.json' assert { type: 'json' };
+
 const distDir = path.resolve(__dirname, 'dist');
 const metaDir = path.resolve(__dirname, 'config');
 
@@ -19,12 +21,15 @@ async function main() {
         target: ['es2020'],
         loader: {
             '.html': 'text'
+        },
+        define: {
+            __VERSION__: JSON.stringify(manifest.version),
         }
     }).catch(() => process.exit(1));
 
     // main.css
     esbuild.build({
-        entryPoints: ['src/style/main.css'],
+        entryPoints: ['src/styles/main.css'],
         outfile: 'dist/main.css',
         minify: true,
         loader: { '.css': 'css' }

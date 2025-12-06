@@ -16,7 +16,7 @@ async function main() {
     insertHtmlBeforeElement(pipBtn, rotateHtml);
     rotateScript.onLoad();
 
-    log(`已加载，耗时 ${Date.now() - beginTime} ms`);
+    log(`${__VERSION__} 已加载，耗时 ${Date.now() - beginTime} ms`);
 }
 
 main();
