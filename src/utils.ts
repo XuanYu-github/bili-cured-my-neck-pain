@@ -1,5 +1,5 @@
 // 等待某个元素加载完成
-export function WaitUntilElementReady(selector: string): Promise<Element> {
+export function waitUntilElementReady(selector: string): Promise<Element> {
     return new Promise((resolve, reject) => {
         const maxTries = 100;
         let trys = 0;
@@ -20,9 +20,13 @@ export function WaitUntilElementReady(selector: string): Promise<Element> {
 };
 
 // 将字符串转换为dom添加到元素前
-export function InsertHtmlBeforeElement(element: Element, html: string) {
+export function insertHtmlBeforeElement(element: Element, html: string) {
     const range = document.createRange();
     const frag = range.createContextualFragment(html);
     element.parentElement?.insertBefore(frag, element);
 }
 
+// 打印日志
+export function log(message: string) {
+    console.log(`[B站治好了我的颈椎病] ${message}`);
+}
