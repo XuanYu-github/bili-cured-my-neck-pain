@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B站视频旋转插件 - 让观看体验更自由</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="icon" href="./assets/bcmnp-logo.png" type="image/png">
+
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bilibili: {
+                            pink: '#FB7299',
+                            blue: '#00A1D6',
+                            dark: '#18191C',
+                            light: '#F4F5F7',
+                            gray: '#9499A0'
+                        },
+                        plugin: {
+                            primary: '#7289DA',
+                            secondary: '#23272A'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'spin-slow': 'spin 10s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .player-shadow {
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            }
+            .btn-hover {
+                @apply transition-all duration-300 hover:scale-105 hover:shadow-lg;
+            }
+            .card-hover {
+                @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-bilibili-dark to-plugin-secondary min-h-screen text-white font-sans">
+    <header class="h-24">
+
+    </header>
+    <!-- 主内容区 -->
+    <main class="container mx-auto px-6 py-16 md:py-24">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <!-- 左侧品牌区 -->
+            <div class="space-y-8">
+                <!-- Logo -->
+                <div class="flex justify-center lg:justify-start">
+                    <img class="w-[10rem] h-[10rem]" src="./assets/bcmnp-logo.png" alt="bcmnp-logo">
+                </div>
+
+                <!-- 标题和描述 -->
+                <div class="text-center lg:text-left space-y-4">
+                    <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold leading-tight">
+                        B站治好了我的颈椎病
+                    </h1>
+                    <p class="text-bilibili-gray text-lg max-w-md mx-auto lg:mx-0">
+                        给B站PC网页版添加视频旋转功能，喜欢的话点点小星星哟😘
+                        <a href="https://github.com/heyManNice/bili-cured-my-neck-pain"
+                            class="text-bilibili-gray hover:text-white transition-colors ml-1">
+                            <i class="fa fa-github"></i>
+                            <span class="ml-1">Github</span>
+                        </a>
+                    </p>
+                </div>
+
+                <!-- 下载按钮 -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <a href="#"
+                        class="btn-hover bg-[#0078D7] text-white px-8 py-4 rounded-lg flex items-center justify-center gap-2">
+                        <i class="fa fa-edge text-xl"></i>
+                        <span>Edge 插件商店</span>
+                    </a>
+                    <a href="#"
+                        class="btn-hover bg-white text-black px-8 py-4 rounded-lg flex items-center justify-center gap-2">
+                        <i class="fa fa-chrome text-xl"></i>
+                        <span>Chrome 商店</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 右侧演示区 -->
+            <div class="relative">
+                <!-- B站风格播放器 -->
+                <div class="aspect-video bg-black rounded-xl overflow-hidden player-shadow relative">
+                    <!-- 视频区域（旋转演示） -->
+                    <div class="w-full h-full flex items-center justify-center bg-bilibili-dark/80 absolute">
+                        <div id="video-rotate-demo"
+                            class="w-full h-full bg-gradient-to-br from-bilibili-pink/30 to-bilibili-blue/30 rounded-lg flex items-center justify-center">
+                            <i class="fa fa-play-circle fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 装饰元素 -->
+                <div
+                    class="absolute -top-4 -right-4 w-20 h-20 bg-bilibili-pink/20 rounded-full blur-xl pointer-events-none">
+                </div>
+                <div
+                    class="absolute -bottom-6 -left-6 w-24 h-24 bg-bilibili-blue/20 rounded-full blur-xl pointer-events-none">
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+<script>
+
+    // 模拟视频旋转效果
+    const video = document.getElementById('video-rotate-demo');
+
+    function rotateVideo(angle) {
+        const W = 16;
+        const H = 9;
+        const rad = angle * Math.PI / 180;
+
+        const scaleX = W / (W * Math.abs(Math.cos(rad)) + H * Math.abs(Math.sin(rad)));
+        const scaleY = H / (W * Math.abs(Math.sin(rad)) + H * Math.abs(Math.cos(rad)));
+
+        const scale = Math.min(scaleX, scaleY);
+
+        const oldRotate = video.style.rotate || '0deg';
+        const oldScale = video.style.scale || '1';
+
+        const newRotate = `${angle}deg`;
+        const newScale = `${scale}`;
+
+        video.style.rotate = newRotate;
+        video.style.scale = newScale;
+
+        // 优化动画效果的老旋转角度
+        let optimizedOldRotate = oldRotate;
+        if (oldRotate === '0deg' && newRotate === '270deg') {
+            optimizedOldRotate = '360deg';
+        } else if (oldRotate === '270deg' && newRotate === '0deg') {
+            optimizedOldRotate = '-90deg';
+        }
+
+        video.animate([
+            {
+                rotate: optimizedOldRotate,
+                scale: oldScale
+            },
+            {
+                rotate: newRotate,
+                scale: newScale
+            }
+        ], {
+            duration: 300,
+            easing: 'ease-in-out',
+        });
+    }
+
+    let globalAngle = 0;
+    setInterval(() => {
+        globalAngle = (globalAngle + 90) % 360;
+        rotateVideo(globalAngle);
+    }, 2000);
+</script>
+
+</html>
