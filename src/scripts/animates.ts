@@ -24,6 +24,8 @@ export const rotateToggleKeyframes: {
             },
             '#bcmnp-toggle-icon-shake': {
                 opacity: '1',
+                rotate: '0deg',
+                transformOrigin: '50% 60%',
             }
         },
         // 25%
@@ -47,6 +49,8 @@ export const rotateToggleKeyframes: {
             },
             '#bcmnp-toggle-icon-shake': {
                 opacity: '0',
+                rotate: '0deg',
+                transformOrigin: '50% 60%',
             }
         },
         // 75%
@@ -69,6 +73,8 @@ export const rotateToggleKeyframes: {
             },
             '#bcmnp-toggle-icon-shake': {
                 opacity: '0',
+                rotate: '90deg',
+                transformOrigin: '50% 60%',
             }
         },
         // 100%
@@ -91,6 +97,8 @@ export const rotateToggleKeyframes: {
             },
             '#bcmnp-toggle-icon-shake': {
                 opacity: '1',
+                rotate: '0deg',
+                transformOrigin: '50% 60%',
             }
         }
     ];

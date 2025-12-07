@@ -80,7 +80,7 @@ class RotateController {
             });
             setTimeout(() => {
                 this.isToggleAnimating = false;
-            }, 1000);
+            }, 1500);
         }
         this.useTeimer(() => {
             this.showPanel();
