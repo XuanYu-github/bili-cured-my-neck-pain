@@ -1,6 +1,11 @@
 import {
-    log
+    log,
+    animateGroup
 } from '../utils.ts';
+
+import {
+    rotateToggleKeyframes
+} from './animates.ts';
 
 class RotateController {
     private toggle: HTMLElement;
@@ -69,12 +74,7 @@ class RotateController {
         // 触发动画
         if (!this.isToggleAnimating) {
             this.isToggleAnimating = true;
-            this.toggle.animate([
-                { transform: 'scale(1)' },
-                { transform: 'scale(0.8)' },
-                { transform: 'scale(0.8)' },
-                { transform: 'scale(1)' }
-            ], {
+            animateGroup(this.toggle, rotateToggleKeyframes, {
                 duration: 500,
                 easing: 'ease-in-out',
             });

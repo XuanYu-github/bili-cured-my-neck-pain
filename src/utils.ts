@@ -39,3 +39,56 @@ export function printVersion(version: string, cost: string) {
         'background:#50E3C2;color:#003333;padding:2px 6px;border-radius:0 3px 3px 0;font-weight:bold;',
     );
 }
+
+
+// 组合元素的动画,keyframes示例
+// [
+//     {
+//         "@current": {
+//             rotate: '0deg',
+//         },
+//         "#child": {
+//             scale: '1',
+//         }
+//     }
+// ]
+export function animateGroup(
+    element: HTMLElement,
+    keyframes: {
+        [selector: string]: Keyframe;
+    }[],
+    options: KeyframeAnimationOptions
+) {
+    const individualKeyframes: {
+        element: HTMLElement;
+        keyframes: Keyframe[];
+    }[] = [];
+
+    for (const frame of keyframes) {
+        for (const selector in frame) {
+            let target: HTMLElement | null = null;
+
+            if (selector === '@current') {
+                target = element;
+            } else {
+                target = element.querySelector(selector);
+            }
+
+            if (target) {
+                // 查找已有的记录
+                let record = individualKeyframes.find(r => r.element === target);
+                if (!record) {
+                    record = { element: target, keyframes: [] };
+                    individualKeyframes.push(record);
+                }
+                record.keyframes.push(frame[selector]);
+            }
+        }
+    }
+
+    // 执行动画
+    for (const { element: el, keyframes: kf } of individualKeyframes) {
+        el.animate(kf, options);
+    }
+}
+
