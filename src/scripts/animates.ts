@@ -2,32 +2,36 @@
 
 // 触发按钮的组合式动画
 export const rotateToggleKeyframes = [
+    // 0%
     {
-        '@current': {
+        '@all': {
             scale: '1',
         },
         '#bcmnp-toggle-icon-dot': {
             opacity: '1',
         }
     },
+    // 25%
     {
-        '@current': {
+        '@all': {
             scale: '0.9',
         },
         '#bcmnp-toggle-icon-dot': {
             opacity: '0',
         }
     },
+    // 75%
     {
-        '@current': {
+        '@all': {
             scale: '0.9',
         },
         '#bcmnp-toggle-icon-dot': {
             opacity: '0',
         }
     },
+    // 100%
     {
-        '@current': {
+        '@all': {
             scale: '1',
         },
         '#bcmnp-toggle-icon-dot': {

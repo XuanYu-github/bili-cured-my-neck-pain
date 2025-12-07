@@ -68,7 +68,7 @@ export function animateGroup(
         for (const selector in frame) {
             let target: HTMLElement | null = null;
 
-            if (selector === '@current') {
+            if (selector === '@all') {
                 target = element;
             } else {
                 target = element.querySelector(selector);
