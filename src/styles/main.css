@@ -26,13 +26,7 @@
 .bcmnp-cols {
     display: flex;
     flex-direction: row;
-    gap: 6px;
-}
-
-.bcmnp-auto-col {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
+    gap: 8px;
 }
 
 .bcmnp-rotate-item {
@@ -46,7 +40,7 @@
 }
 
 .bcmnp-rotate-item.checked {
-    background-color: var(--brand_blue, #00AEEC);
+    background-color: var(--bpx-primary-color, #00AEEC);
 }
 
 .bcmnp-rotate-item:not(.checked):hover {

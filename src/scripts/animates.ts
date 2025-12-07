@@ -31,7 +31,7 @@ export const rotateToggleKeyframes: {
         // 25%
         {
             '@all': {
-                scale: '1.2',
+                scale: '1',
                 translate: '-3px 0px',
             },
             '#bcmnp-toggle-icon-dot': {
@@ -56,7 +56,7 @@ export const rotateToggleKeyframes: {
         // 75%
         {
             '@all': {
-                scale: '1.2',
+                scale: '1',
                 translate: '-3px 0px',
             },
             '#bcmnp-toggle-icon-dot': {
@@ -73,7 +73,7 @@ export const rotateToggleKeyframes: {
             },
             '#bcmnp-toggle-icon-shake': {
                 opacity: '0',
-                rotate: '90deg',
+                rotate: '180deg',
                 transformOrigin: '50% 60%',
             }
         },
