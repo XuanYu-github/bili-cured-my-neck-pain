@@ -126,7 +126,7 @@ class RotateController {
     // 鼠标点击屏幕旋转选项的值
     private rotateItemOnClick(event: Event) {
         const target = event.target as HTMLElement;
-        if (!target.classList.contains('bcmnp-rotate-item')) {
+        if (!target.classList.contains('bcmnp-btn-item')) {
             return;
         }
 
@@ -139,7 +139,7 @@ class RotateController {
         this.rotateVideo(angle);
 
         // 更新选中状态
-        const checked = this.rotateItems.querySelector<HTMLElement>('.bcmnp-rotate-item.checked');
+        const checked = this.rotateItems.querySelector<HTMLElement>('.bcmnp-rotate-items .bcmnp-btn-item.checked');
         if (checked) {
             checked.classList.remove('checked');
         }
