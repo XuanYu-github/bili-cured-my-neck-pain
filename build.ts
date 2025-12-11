@@ -1,11 +1,31 @@
 import * as esbuild from 'esbuild';
+import * as fs from 'fs';
 import * as path from 'path';
 import * as dir from './tools/dir.ts';
 
 import manifest from './config/manifest.json' assert { type: 'json' };
+import { minify } from 'html-minifier-terser';
 
 const distDir = path.resolve(__dirname, 'dist');
 const metaDir = path.resolve(__dirname, 'config');
+
+
+const htmlMinifyPlugin = {
+    name: 'html-minify',
+    setup(build: esbuild.PluginBuild) {
+        build.onLoad({ filter: /\.html$/ }, async (args) => {
+            const source = await fs.promises.readFile(args.path, 'utf8');
+            const minified = await minify(source, {
+                collapseWhitespace: true,
+                removeComments: true,
+            });
+            return {
+                contents: minified,
+                loader: 'text',
+            };
+        });
+    },
+};
 
 async function main() {
     dir.mkdir(distDir);
@@ -19,9 +39,7 @@ async function main() {
         minify: true,
         sourcemap: false,
         target: ['es2020'],
-        loader: {
-            '.html': 'text'
-        },
+        plugins: [htmlMinifyPlugin],
         define: {
             __VERSION__: JSON.stringify(manifest.version),
         }

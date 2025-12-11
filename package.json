@@ -8,6 +8,8 @@
         "@types/adm-zip": "^0.5.7",
         "@types/node": "^24.10.1",
         "adm-zip": "^0.5.16",
-        "esbuild": "^0.27.1"
+        "esbuild": "^0.27.1",
+        "@types/html-minifier-terser": "^7.0.2",
+        "html-minifier-terser": "^7.2.0"
     }
 }
