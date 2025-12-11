@@ -19,11 +19,11 @@ export function waitUntilElementReady(selector: string): Promise<Element> {
     })
 };
 
-// 将字符串转换为dom添加到元素前
-export function insertHtmlBeforeElement(element: Element, html: string) {
+// 将字符串转换为dom添加到元素后面
+export function insertHtmlAfterElement(element: Element, html: string) {
     const range = document.createRange();
     const frag = range.createContextualFragment(html);
-    element.parentElement?.insertBefore(frag, element);
+    element.parentElement?.insertBefore(frag, element.nextSibling);
 }
 
 // 打印日志
